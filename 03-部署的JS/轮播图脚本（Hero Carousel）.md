@@ -99,7 +99,7 @@ const resp = await fetch('/nav/api/hero', { cache: 'no-cache', signal: ctrl2.sig
   - 对象 `{images: [...], debug: "..."}`（debug 模式）
 - `Array.isArray(data) ? data : (data.images || [])` 兼容处理
 
-> 当前线上返回的是 debug 格式（含 debug 字段，KV 中存的是字符串而非 JSON 数组，Worker 解析出错后回退），详见 [API 端点清单](../02-网站架构/API 端点清单.md)。
+> 当前线上返回的是 debug 格式（含 debug 字段，KV 中存的是字符串而非 JSON 数组，Worker 解析出错后回退），详见 [API 端点清单](API端点清单.md)。
 
 ### 2. Fallback 兜底
 ```javascript
@@ -142,7 +142,7 @@ https://raw.githubusercontent.com/argb6/gal-navigation/main/docs/hero/hero1.png
 https://raw.githubusercontent.com/argb6/gal-navigation/main/docs/hero/hero2.png
 https://raw.githubusercontent.com/argb6/gal-navigation/main/docs/hero/hero3.png
 ```
-这些图片存放在仓库 `docs/hero/` 目录（详见 [图片素材资源](../04-数据与资源/图片素材资源.md)），验证了 GitHub 仓库作为静态资源 CDN 的角色。
+这些图片存放在仓库 `docs/hero/` 目录（详见 [图片素材资源](图片素材资源.md)），验证了 GitHub 仓库作为静态资源 CDN 的角色。
 
 ## 设计特点
 
@@ -165,9 +165,9 @@ https://raw.githubusercontent.com/argb6/gal-navigation/main/docs/hero/hero3.png
 
 ## 相关笔记
 
-- 数据源 → [API 端点清单](../02-网站架构/API 端点清单.md)（/nav/api/hero）
-- 存储 → [存储层 D1 与 KV](../02-网站架构/存储层 D1 与 KV.md)（KV）
-- 图片素材 → [图片素材资源](../04-数据与资源/图片素材资源.md)
+- 数据源 → [API 端点清单](API端点清单.md)（/nav/api/hero）
+- 存储 → [存储层 D1 与 KV](存储层D1与KV.md)（KV）
+- 图片素材 → [图片素材资源](图片素材资源.md)
 - 主应用 → [主应用逻辑脚本（卡片与交互）](主应用逻辑脚本（卡片与交互）.md)
-- 总览 → [内联 JS 总览与加载策略](内联 JS 总览与加载策略.md)
-- 上一级 → [00 知识库地图 (MOC)](../00 知识库地图 (MOC).md)
+- 总览 → [内联 JS 总览与加载策略](内联JS总览与加载策略.md)
+- 上一级 → [00 知识库地图 (MOC)](00知识库地图(MOC).md)
