@@ -7,7 +7,7 @@ aliases: [API清单, 接口列表, 端点]
 
 # API 端点清单
 
-> [!summary] 实测确认的 3 个真实 API
+> ！实测确认的 3 个真实 API
 > 全部位于 `/nav/api/*` 下，返回 `application/json`，由主站客户端 JS 调用。
 
 ## 端点总览
@@ -57,7 +57,7 @@ GET /nav/api/nav
 | `icon_path` | string | 图标 URL |
 
 ### 客户端格式化
-前端拿到后做映射（见 [数据预加载脚本（D1 载入）](../03-部署的JS/数据预加载脚本（D1 载入）.md)）：
+前端拿到后做映射（见 [数据预加载脚本（D1 载入）](数据预加载脚本（D1载入）.md)）：
 ```javascript
 const CAT_MAP = {
   simulators: 'simulator', websites: 'site',
@@ -66,7 +66,7 @@ const CAT_MAP = {
 // 转成 {id, cat, name, desc, tags[], url, icon}
 ```
 
-> 该端点返回线上 D1 数据（29 条），与 GitHub 仓库 `docs/data.json`（26 条）**字段结构一致但条目滞后**——D1 比仓库多 3 条网站。说明 D1 是权威源，仓库 data.json 是滞后镜像。详见 [data.json 数据结构](../04-数据与资源/data.json 数据结构.md)。
+> 该端点返回线上 D1 数据（29 条），与 GitHub 仓库 `docs/data.json`（26 条）**字段结构一致但条目滞后**——D1 比仓库多 3 条网站。说明 D1 是权威源，仓库 data.json 是滞后镜像。详见 [data.json 数据结构](data.json数据结构.md)。
 
 ### 源码实现细节（websearch.js）
 - **SQL**：`SELECT item_key, title, category, tags, short_desc, url, icon_path FROM <表名> ORDER BY category ASC`（参数化，无注入风险）
@@ -98,7 +98,7 @@ const CAT_MAP = {
 - 图片指向 **GitHub raw**（`raw.githubusercontent.com/argb6/gal-navigation/main/docs/hero/`），验证了仓库作为静态资源 CDN 的角色。
 - 客户端有 `HERO_FALLBACK = []` 兜底（当前为空数组，KV 失败时轮播为空）。
 
-详见 [轮播图脚本（Hero Carousel）](../03-部署的JS/轮播图脚本（Hero Carousel）.md)。
+详见 [轮播图脚本（Hero Carousel）](轮播图脚本（HeroCarousel）.md)。
 
 ## 3. `/nav/api/featured` —— KV 站长推荐
 
@@ -118,7 +118,7 @@ const CAT_MAP = {
 - **同步回写 KV**：fallback 计算出推荐后，会 POST `/nav/api/featured`（Worker 写入推荐 KV 绑定）写入 KV，让后续请求直接命中（自愈机制）
 - **CORS**：支持 OPTIONS 预检（`GET, POST, OPTIONS`），`Access-Control-Allow-Origin: https://galnavi.top`
 
-详见 [主应用逻辑脚本（卡片与交互）](../03-部署的JS/主应用逻辑脚本（卡片与交互）.md) 的 featured 部分。
+详见 [主应用逻辑脚本（卡片与交互）](主应用逻辑脚本（卡片与交互）.md) 的 featured 部分。
 
 ## 非真实端点（fallback）
 
@@ -155,7 +155,7 @@ sequenceDiagram
 
 ## 相关笔记
 
-- 存储分工 → [存储层 D1 与 KV](存储层 D1 与 KV.md)
-- 调用方 JS → [数据预加载脚本（D1 载入）](../03-部署的JS/数据预加载脚本（D1 载入）.md)
-- 数据结构 → [data.json 数据结构](../04-数据与资源/data.json 数据结构.md)
-- 上一级 → [00 知识库地图 (MOC)](../00 知识库地图 (MOC).md)
+- 存储分工 → [存储层 D1 与 KV](存储层D1与KV.md)
+- 调用方 JS → [数据预加载脚本（D1 载入）](数据预加载脚本（D1载入）.md)
+- 数据结构 → [data.json 数据结构](data.json数据结构.md)
+- 上一级 → [00 知识库地图 (MOC)](00知识库地图(MOC).md)
