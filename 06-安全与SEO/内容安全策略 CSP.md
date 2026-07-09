@@ -1,0 +1,99 @@
+---
+tags: [GalNavi, 安全, CSP, 内容安全策略]
+created: 2026-07-08
+updated: 2026-07-09
+aliases: [CSP, Content-Security-Policy, 内容安全策略]
+---
+
+# 内容安全策略 CSP
+
+> [!info] 位置
+> **仅主站** `/nav/`（`websearch.js`）的 `<meta http-equiv="Content-Security-Policy">`。其他 worker（detail.js / about.js / help.js）**未设置 CSP**。
+
+## 完整 CSP 策略（源码确认，websearch.js 行46）
+
+```http
+Content-Security-Policy:
+  default-src 'self';
+  script-src 'self' 'unsafe-inline'
+             https://lf26-cdn-tos.bytecdntp.com
+             https://static.cloudflareinsights.com;
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+  img-src 'self' data: https:;
+  connect-src 'self' https://galnavi.top;
+  font-src 'self' data: https://fonts.gstatic.com;
+```
+
+## 逐指令解析
+
+### `default-src 'self'`
+- 默认所有资源只允许同源
+- 是其他指令未覆盖时的兜底
+
+### `script-src 'self' 'unsafe-inline' https://lf26-cdn-tos.bytecdntp.com https://static.cloudflareinsights.com`
+| 源 | 用途 | 实际使用 |
+|---|---|---|
+| `'self'` | 同源脚本 | 当前未用外部脚本文件 |
+| `'unsafe-inline'` | **内联脚本** | ✅ 必需，所有 JS 内联 |
+| `https://lf26-cdn-tos.bytecdntp.com` | 字节跳动 CDN | ⚠️ 预留/历史，当前未加载 |
+| `https://static.cloudflareinsights.com` | Cloudflare Web Analytics | ✅ 分析用 |
+
+> `'unsafe-inline'` 是因全内联策略必须开的口子。GalNavi 用 [[03-部署的JS/XSS 防护与 escapeHtml|escapeHtml]] 在渲染层弥补。
+
+### `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com`
+- 允许内联样式（CSS 全内联，必需）
+- 允许 Google Fonts 样式（预留，当前 CSS 全内联未实际引用）
+
+### `img-src 'self' data: https:`
+- 同源图片、`data:` 内联 base64（favicon）、**任何 https 图片源**
+- `https:` 较宽松，因站点图标来自各站（bing、各站自身、第三方图标库），无法预知所有域
+
+### `connect-src 'self' https://galnavi.top` —— 最关键
+- **fetch/XHR/WebSocket 只允许同源**
+- 客户端 JS 只能 fetch `galnavi.top` 自身的 API（`/nav/api/*`）
+- **不能** fetch 第三方域（防止数据外泄到外部服务器）
+- 这也解释了为何所有 API 都在 `/nav/api/` 下
+
+### `font-src 'self' data: https://fonts.gstatic.com`
+- 字体只允许同源、base64、Google Fonts 字体域
+
+## CSP 仅作用于主站
+
+| Worker | CSP | 说明 |
+|---|---|---|
+| `websearch.js`（主站）| ✅ 有 | 完整 CSP meta |
+| `detail.js`（详情页）| ❌ 无 | 未设 CSP meta |
+| `about.js`（关于页）| ❌ 无 | 未设 CSP meta |
+| `help.js`（帮助页）| ❌ 无 | 未设 CSP meta |
+| `galnavi.js`（入口页）| ❌ 无 | 未设 CSP meta |
+
+> 注：detail/about/help 页内容相对固定（SSR 直出），外链已用 `rel="noopener noreferrer"` 保护，无客户端 fetch 第三方数据，故未设 CSP 风险较低。但理想情况下所有页面都应设 CSP。
+
+## CSP 防护效果
+
+| 攻击 | CSP 防护 |
+|---|---|
+| 外部脚本注入 | ✅ script-src 白名单阻止 |
+| 内联脚本 XSS | ⚠️ unsafe-inline 允许，靠 escapeHtml 弥补 |
+| 数据外泄 | ✅ connect-src 限制只回同源 |
+| 图片滥用 | ⚠️ img-src https: 较宽 |
+| 样式注入 | ⚠️ unsafe-inline，但影响小 |
+
+## 与 API CORS 的配合
+
+API 端点（`/nav/api/*`）在响应头中设置 CORS（源码确认）：
+```http
+Access-Control-Allow-Origin: https://galnavi.top
+```
+- CSP 的 `connect-src` 限制**客户端能发请求到哪里**
+- CORS 的 `Access-Control-Allow-Origin` 限制**哪些源能读取响应**
+- 两者配合：只有 galnavi.top 自身的页面能调这些 API，形成双重约束
+- featured 端点额外支持 OPTIONS 预检（`GET, POST, OPTIONS`）
+
+## 相关笔记
+
+- XSS 防护 → [[03-部署的JS/XSS 防护与 escapeHtml]]
+- 安全响应头（含 CORS/Cache-Control）→ [[安全响应头]]
+- 外链安全 → [[外链安全设计]]
+- 内联策略 → [[03-部署的JS/内联 JS 总览与加载策略]]
+- 上一级 → [[00 知识库地图 (MOC)]]
