@@ -7,8 +7,9 @@ aliases: [CSP, Content-Security-Policy, 内容安全策略]
 
 # 内容安全策略 CSP
 
-> [!info] 位置
-> **仅主站** `/nav/`（`websearch.js`）的 `<meta http-equiv="Content-Security-Policy">`。其他 worker（detail.js / about.js / help.js）**未设置 CSP**。
+> ！位置
+> 
+> **仅主站** `/nav/`的 `<meta http-equiv="Content-Security-Policy">`。其他 worker **未设置 CSP**。
 
 ## 完整 CSP 策略（源码确认，websearch.js 行46）
 
@@ -61,11 +62,11 @@ Content-Security-Policy:
 
 | Worker | CSP | 说明 |
 |---|---|---|
-| `websearch.js`（主站）| ✅ 有 | 完整 CSP meta |
-| `detail.js`（详情页）| ❌ 无 | 未设 CSP meta |
-| `about.js`（关于页）| ❌ 无 | 未设 CSP meta |
-| `help.js`（帮助页）| ❌ 无 | 未设 CSP meta |
-| `galnavi.js`（入口页）| ❌ 无 | 未设 CSP meta |
+| `/nav/`（主站）| ✅ 有 | 完整 CSP meta |
+| `/nav/detail/`（详情页）| ❌ 无 | 未设 CSP meta |
+| `/nav/about/`（关于页）| ❌ 无 | 未设 CSP meta |
+| `/nav/help/`（帮助页）| ❌ 无 | 未设 CSP meta |
+| `galnavi.top`（入口页）| ❌ 无 | 未设 CSP meta |
 
 > 注：detail/about/help 页内容相对固定（SSR 直出），外链已用 `rel="noopener noreferrer"` 保护，无客户端 fetch 第三方数据，故未设 CSP 风险较低。但理想情况下所有页面都应设 CSP。
 
@@ -92,8 +93,8 @@ Access-Control-Allow-Origin: https://galnavi.top
 
 ## 相关笔记
 
-- XSS 防护 → [XSS 防护与 escapeHtml](../03-部署的JS/XSS 防护与 escapeHtml.md)
+- XSS 防护 → [XSS 防护与 escapeHtml.md](XSS防护与escapeHtml.md)
 - 安全响应头（含 CORS/Cache-Control）→ [安全响应头](安全响应头.md)
 - 外链安全 → [外链安全设计](外链安全设计.md)
-- 内联策略 → [内联 JS 总览与加载策略](../03-部署的JS/内联 JS 总览与加载策略.md)
-- 上一级 → [00 知识库地图 (MOC)](../00 知识库地图 (MOC).md)
+- 内联策略 → [内联 JS 总览与加载策略.md](内联JS总览与加载策略.md)
+- 上一级 → [00 知识库地图 (MOC).md](00知识库地图(MOC).md)
