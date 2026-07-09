@@ -93,4 +93,4 @@ git clone https://github.com/argb6/galnavi-obsidian.git
 
 ## ⚖️ 许可
 
-[MIT License]([argb6/galnavi-obsidian: 与galnavi配套的站点框架体系](https://github.com/argb6/galnavi-obsidian?tab=MIT-1-ov-file)) © 2026
+[MIT License](https://github.com/argb6/galnavi-obsidian?tab=MIT-1-ov-file) © 2026
