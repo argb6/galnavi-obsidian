@@ -7,7 +7,8 @@ aliases: [SEO, 搜索引擎优化, sitemap, robots, OG标签]
 
 # SEO 与可发现性
 
-> [!info] 概述
+> ！概述
+> 
 > GalNavi 在 SEO 上做了系统化配置：sitemap、robots、meta 标签、Open Graph、canonical。让搜索引擎与社交平台能正确理解与展示站点。**入口页（galnavi.js）SEO 配置最完整**，主站（websearch.js）次之。
 
 ## SEO 资产清单
