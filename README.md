@@ -67,7 +67,7 @@ git clone https://github.com/你的用户名/galnavigation.git
 ```
 
 2. 用 [Obsidian](https://obsidian.md/) 打开 `galnavigation/` 作为 Vault
-3. 从 **「00 知识库地图 (MOC)」** 开始浏览
+3. 从 [00 知识库地图 (MOC)](00知识库地图(MOC).md) 开始浏览
 
 ### 在线浏览
 
@@ -93,4 +93,4 @@ git clone https://github.com/你的用户名/galnavigation.git
 
 ## ⚖️ 许可
 
-[MIT License](LICENSE) © 2026
+[MIT License]([argb6/galnavi-obsidian: 与galnavi配套的站点框架体系](https://github.com/argb6/galnavi-obsidian?tab=MIT-1-ov-file)) © 2026
