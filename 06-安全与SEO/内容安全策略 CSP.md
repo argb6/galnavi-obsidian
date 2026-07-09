@@ -93,8 +93,8 @@ Access-Control-Allow-Origin: https://galnavi.top
 
 ## 相关笔记
 
-- XSS 防护 → [XSS 防护与 escapeHtml](../03-部署的JS/XSS 防护与 escapeHtml.md)
+- XSS 防护 → [XSS 防护与 escapeHtml.md](https://github.com/argb6/galnavi-obsidian/blob/main/03-%E9%83%A8%E7%BD%B2%E7%9A%84JS/XSS%20%E9%98%B2%E6%8A%A4%E4%B8%8E%20escapeHtml.md)
 - 安全响应头（含 CORS/Cache-Control）→ [安全响应头](安全响应头.md)
 - 外链安全 → [外链安全设计](外链安全设计.md)
-- 内联策略 → [内联 JS 总览与加载策略](../03-部署的JS/内联 JS 总览与加载策略.md)
-- 上一级 → [00 知识库地图 (MOC)](../00 知识库地图 (MOC).md)
+- 内联策略 → [内联 JS 总览与加载策略.md](https://github.com/argb6/galnavi-obsidian/blob/main/03-%E9%83%A8%E7%BD%B2%E7%9A%84JS/%E5%86%85%E8%81%94%20JS%20%E6%80%BB%E8%A7%88%E4%B8%8E%E5%8A%A0%E8%BD%BD%E7%AD%96%E7%95%A5.md)
+- 上一级 → [../00 知识库地图 (MOC).md](https://github.com/argb6/galnavi-obsidian/blob/main/00%20%E7%9F%A5%E8%AF%86%E5%BA%93%E5%9C%B0%E5%9B%BE%20(MOC).md)
