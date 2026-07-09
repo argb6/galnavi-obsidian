@@ -7,7 +7,9 @@ aliases: [内联JS, JS总览, 脚本加载, 三段式脚本]
 
 # 内联 JS 总览与加载策略
 
+
 > ！核心特征
+> 
 > GalNavi **没有任何外部 JS 文件**（除 Cloudflare 自身的 challenge-platform）。所有业务 JavaScript 都以 `<script>` **内联**在每个页面的 HTML 中。这是一种"零外部请求"的极简部署策略。
 
 ## 为什么全内联？
