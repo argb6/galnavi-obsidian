@@ -110,13 +110,13 @@ function escapeRegExp(str) {
 
 GalNavi 的 XSS 防护是多层的：
 
-| 层 | 措施 | 笔记 |
-|---|---|---|
-| 输入转义 | `escapeHtml` 所有动态值 | 本笔记 |
-| 正则安全 | `escapeRegExp` 用户搜索词 | 本笔记 |
-| CSP | 严格的 script-src 白名单 | [内容安全策略 CSP](内容安全策略CSP.md) |
-| 外链安全 | noopener noreferrer | [外链跳转脚本（Redirect 倒计时）](外链跳转脚本（Redirect倒计时）.md) |
-| 内容类型 | nosniff 头 | [安全响应头](安全响应头.md) |
+| 层    | 措施                   | 笔记                                             |
+| ---- | -------------------- | ---------------------------------------------- |
+| 输入转义 | `escapeHtml` 所有动态值   | 本笔记                                            |
+| 正则安全 | `escapeRegExp` 用户搜索词 | 本笔记                                            |
+| CSP  | 严格的 script-src 白名单   | [内容安全策略 CSP](内容安全策略CSP.md)                     |
+| 外链安全 | noopener noreferrer  | [外链跳转脚本（Redirect 倒计时）](外链跳转脚本(Redirect倒计时).md) |
+| 内容类型 | nosniff 头            | [安全响应头](安全响应头.md)                              |
 
 ## 局限性
 

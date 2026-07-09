@@ -31,7 +31,7 @@ aliases: [GalNavi作用, GalNavi价值, 网站作用]
 - **站长推荐**：KV 配置的精选条目（[`/nav/api/featured`](API端点清单.md)）
 
 ### 4. 安全外链跳转
-- 外部链接不直接打开，而是弹出 3 秒倒计时确认层（[外链跳转脚本（Redirect 倒计时）](外链跳转脚本（Redirect倒计时）.md)）
+- 外部链接不直接打开，而是弹出 3 秒倒计时确认层（[外链跳转脚本（Redirect 倒计时）](外链跳转脚本(Redirect倒计时).md)）
 - 使用 `noopener,noreferrer` 防止 referer 泄露与 tab 劫持
 - 详见 [外链安全设计](外链安全设计.md)
 

@@ -1,12 +1,76 @@
 {
-  "collapse-filter": true,
+  "collapse-filter": false,
   "search": "",
   "showTags": false,
   "showAttachments": false,
   "hideUnresolved": false,
   "showOrphans": true,
-  "collapse-color-groups": true,
-  "colorGroups": [],
+  "collapse-color-groups": false,
+  "colorGroups": [
+    {
+      "query": "path:01-项目总览  ",
+      "color": {
+        "a": 1,
+        "rgb": 16711680
+      }
+    },
+    {
+      "query": "path:02-网站架构  ",
+      "color": {
+        "a": 1,
+        "rgb": 15179533
+      }
+    },
+    {
+      "query": "path:03-部署的JS  ",
+      "color": {
+        "a": 1,
+        "rgb": 14286618
+      }
+    },
+    {
+      "query": "path:04-数据与资源  ",
+      "color": {
+        "a": 1,
+        "rgb": 2608679
+      }
+    },
+    {
+      "query": "path:05-页面详解  ",
+      "color": {
+        "a": 1,
+        "rgb": 16711854
+      }
+    },
+    {
+      "query": "path:06-安全与SEO  ",
+      "color": {
+        "a": 1,
+        "rgb": 2597085
+      }
+    },
+    {
+      "query": "file:00",
+      "color": {
+        "a": 1,
+        "rgb": 5395168
+      }
+    },
+    {
+      "query": "file:总览",
+      "color": {
+        "a": 1,
+        "rgb": 11621088
+      }
+    },
+    {
+      "query": "file:readme",
+      "color": {
+        "a": 1,
+        "rgb": 16777215
+      }
+    }
+  ],
   "collapse-display": true,
   "showArrow": false,
   "textFadeMultiplier": 0,
@@ -17,6 +81,6 @@
   "repelStrength": 10,
   "linkStrength": 1,
   "linkDistance": 250,
-  "scale": 1.053497942386825,
-  "close": false
+  "scale": 0.5359795996225923,
+  "close": true
 }

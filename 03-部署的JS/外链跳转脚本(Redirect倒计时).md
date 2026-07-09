@@ -1,8 +1,17 @@
 ---
-tags: [GalNavi, JS, 安全, 外链跳转, 倒计时]
+tags:
+  - GalNavi
+  - JS
+  - 安全
+  - 外链跳转
+  - 倒计时
 created: 2026-07-08
 updated: 2026-07-08
-aliases: [startRedirect, 外链跳转, 倒计时跳转, redirectOverlay]
+aliases:
+  - startRedirect
+  - 外链跳转
+  - 倒计时跳转
+  - redirectOverlay
 ---
 
 # 外链跳转脚本（Redirect 倒计时）
