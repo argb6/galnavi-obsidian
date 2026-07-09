@@ -7,17 +7,16 @@ aliases: [data.json, 数据结构, 站点数据]
 
 # data.json 数据结构
 
-> [!info] 概述
-> `docs/data.json` 是 GitHub 仓库中的数据文件，是线上 D1 数据库（[/nav/api/nav](../02-网站架构/API 端点清单.md)）的**滞后镜像**。字段结构一致，但条目数可能不同步。
+> ！概述
+> `docs/data.json` 是 GitHub 仓库中的数据文件，是线上 D1 数据库（[/nav/api/nav](API端点清单.md)）的**滞后镜像**。
 > - 线上 D1（权威）：截至 2026-07-08 共 **29 条**（simulators 7 + websites 22）
-> - 仓库 data.json（镜像）：**26 条**（simulators 7 + websites 19），比 D1 少 3 条
-
+> - 仓库 data.json（镜像）
 ## 文件位置
 
 - 仓库：[docs/data.json](https://github.com/argb6/gal-navigation/blob/main/docs/data.json)（8147 字节）
 - 线上：`GET https://galnavi.top/nav/api/nav`（9231 字节）
 
-> ⚠️ 两者**不完全同步**：D1 比仓库多 3 条网站（琉璃神社、绅士之庭、萌心次元）。说明 D1 是权威源，仓库 data.json 是定期导出的滞后副本。详见 [GitHub 仓库的角色](GitHub 仓库的角色.md) 的"数据源/镜像"部分。
+> ⚠️ 两者**不完全同步**：D1 是权威源，仓库 data.json 是定期导出的滞后副本。详见 [GitHub 仓库的角色](GitHub仓库的角色.md) 的 角色 1：数据滞后镜像。
 
 ## 数据格式
 
@@ -42,12 +41,12 @@ aliases: [data.json, 数据结构, 站点数据]
 
 | 字段 | 类型 | 必填 | 说明 | 示例 |
 |---|---|---|---|---|
-| `item_key` | string | ✅ | 唯一标识，作 D1 主键，featured 引用它 | `"joiplay"` / `"灵梦御所"` |
-| `title` | string | ✅ | 显示名称 | `"Joiplay"` |
-| `category` | string | ✅ | 分类（复数形式）| `simulators` / `websites` |
+| `item_key` | string | ✅ | 唯一标识，作 D1 主键，方便引用它 | `"joiplay"` / `"灵梦御所"` |
+| `title` | string | ✅ | 名称 | `"Joiplay"` |
+| `category` | string | ✅ | 分类 | `simulators` / `websites` |
 | `tags` | string | ✅ | 逗号分隔的标签串 | `"安卓,rpg,多功能,插件化"` |
 | `short_desc` | string | ✅ | 一句话简介 | `"独特的插件生态"` |
-| `url` | string | ⚠️ | 主站链接（模拟器类为空）| `""` 或 `"https://..."` |
+| `url` | string | ✅ | 主站链接 | `""` 或 `"https://..."` |
 | `icon_path` | string | ✅ | 图标 URL | `"https://joiplay.net/.../icon.png"` |
 
 ## 字段细节
@@ -59,13 +58,13 @@ aliases: [data.json, 数据结构, 站点数据]
 - 用于详情页 URL：`/nav/detail/?item_key=xxx`
 
 ### category（5 类，复数）
-| category | 含义 | 当前数量 | 前端映射（单数）|
+| category | 含义 | 前端映射（单数）|
 |---|---|---|---|
-| `simulators` | 模拟器 | 7 | `simulator` |
-| `websites` | 站点 | 22 | `site` |
-| `tools` | 工具 | 0（规划）| `tool` |
-| `company` | 会社 | 0（规划）| `company` |
-| `hanhua` | 汉化组 | 0（规划）| `hanhua` |
+| `simulators` | 模拟器 | `simulator` |
+| `websites` | 站点 | `site` |
+| `tools` | 工具 | `tool` |
+| `company` | 会社 | `company` |
+| `hanhua` | 汉化组 | `hanhua` |
 
 > 当前只有 `simulators` 和 `websites` 有数据，`tools`/`company`/`hanhua` 是规划中的分类（导航栏已预留视图，见 [路由与页面体系](../02-网站架构/路由与页面体系.md)）。
 
@@ -96,26 +95,9 @@ aliases: [data.json, 数据结构, 站点数据]
 - 推测工作流：站长更新 D1 后定期导出到仓库 data.json，存在滞后窗口
 - 详见 [GitHub 仓库的角色](GitHub 仓库的角色.md)
 
-## 完整条目清单（基于线上 D1，29 条）
-
-### 模拟器（simulators，7 条）
-| item_key | title | short_desc |
-|---|---|---|
-| joiplay | Joiplay | 独特的插件生态 |
-| kirikiroid2 | Kirikiroid2 | 老牌模拟器 |
-| mine | Mine | ons模拟器 |
-| ryujinx | Ryujinx | PC 版 Switch 模拟器 |
-| tyranor | Tyranor | 多功能模拟器 |
-| winlator | Winlator | 复刻电脑 |
-| 盖世游戏 | 盖世游戏 | 对新手友好 |
-
-### 网站（websites，22 条）
-详见 [收录站点分类（模拟器与网站）](收录站点分类（模拟器与网站）.md)。
-
 ## 相关笔记
 
-- 分类详情 → [收录站点分类（模拟器与网站）](收录站点分类（模拟器与网站）.md)
 - 标签语义 → [标签体系](标签体系.md)
-- 数据加载 JS → [数据预加载脚本（D1 载入）](../03-部署的JS/数据预加载脚本（D1 载入）.md)
-- 存储 → [存储层 D1 与 KV](../02-网站架构/存储层 D1 与 KV.md)
-- 上一级 → [00 知识库地图 (MOC)](../00 知识库地图 (MOC).md)
+- 数据加载 JS → [数据预加载脚本（D1 载入）](数据预加载脚本（D1载入）.md)
+- 存储 → [存储层 D1 与 KV](存储层D1与KV.md)
+- 上一级 → [00 知识库地图 (MOC)](00知识库地图(MOC).md)
