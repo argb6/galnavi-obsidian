@@ -8,6 +8,7 @@ aliases: [仓库角色, GitHub仓库, argb6/gal-navigation]
 # GitHub 仓库的角色
 
 > ！关键认知
+> 
 > 仓库 `argb6/gal-navigation` **不存放网站源代码**，只存放**数据与素材资源**。这是一个容易被误解的点——它不是常规的"代码仓库"，而是 GalNavi 的"数据仓库 + 静态资源 CDN + 项目说明"。
 
 ## 仓库地址
