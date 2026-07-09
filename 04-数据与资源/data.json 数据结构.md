@@ -8,6 +8,7 @@ aliases: [data.json, 数据结构, 站点数据]
 # data.json 数据结构
 
 > ！概述
+> 
 > `docs/data.json` 是 GitHub 仓库中的数据文件，是线上 D1 数据库（[/nav/api/nav](API端点清单.md)）的**滞后镜像**。
 > - 线上 D1（权威）：截至 2026-07-08 共 **29 条**（simulators 7 + websites 22）
 > - 仓库 data.json（镜像）
