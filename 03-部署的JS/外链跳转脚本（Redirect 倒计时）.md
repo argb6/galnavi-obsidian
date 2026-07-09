@@ -7,7 +7,8 @@ aliases: [startRedirect, 外链跳转, 倒计时跳转, redirectOverlay]
 
 # 外链跳转脚本（Redirect 倒计时）
 
-> [!info] 位置
+> ！位置
+> 
 > 主站 `/nav/` 行948 主应用脚本中的 `startRedirect(targetUrl)` 及配套的 `tick` / `cancel` 函数。这是 GalNavi **外链安全设计**的核心实现。
 
 ## 设计目的
