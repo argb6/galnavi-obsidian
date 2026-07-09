@@ -40,7 +40,6 @@ galnavigation/
 │   └── XSS 防护与 escapeHtml
 ├── 04-数据与资源/                    ← data.json、分类、标签、素材
 │   ├── data.json 数据结构
-│   ├── 收录站点分类（模拟器与网站）
 │   ├── 标签体系
 │   ├── 图片素材资源
 │   └── GitHub 仓库的角色
