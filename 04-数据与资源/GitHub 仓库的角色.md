@@ -62,17 +62,17 @@ graph LR
     subgraph GitHub 仓库
         R[README.md]
         L[LICENSE MIT]
-        D[docs/data.json]
-        H[docs/hero/*.png]
-        M[docs/mascot/]
-        E[docs/emoji/]
-        A[assets/]
+        D["docs/data.json"]
+        H["docs/hero/*.png"]
+        M["docs/mascot/"]
+        E["docs/emoji/"]
+        A["assets/"]
     end
 
     subgraph 线上 galnavi.top
         W[Worker SSR]
-        D1[(D1 数据库)]
-        KV[(KV)]
+        D1["(D1 数据库)"]
+        KV["(KV)"]
         P1[入口页]
         P2[主站]
         P3[帮助页]
