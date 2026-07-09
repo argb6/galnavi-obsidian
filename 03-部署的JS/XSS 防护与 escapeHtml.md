@@ -7,7 +7,7 @@ aliases: [escapeHtml, XSS防护, 输入转义]
 
 # XSS 防护与 escapeHtml
 
-> [!info] 位置
+> ！位置
 > `escapeHtml` 定义在主站 `/nav/` 行1 的数据预加载脚本中（最早可用），供主应用脚本（行948）的 `buildCard` 等渲染函数调用。
 
 ## 为什么需要
