@@ -63,7 +63,7 @@ galnavigation/
 1. 克隆仓库
 
 ```bash
-git clone https://github.com/你的用户名/galnavigation.git
+git clone https://github.com/argb6/galnavi-obsidian.git
 ```
 
 2. 用 [Obsidian](https://obsidian.md/) 打开 `galnavigation/` 作为 Vault
