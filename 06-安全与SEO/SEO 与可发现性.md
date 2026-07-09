@@ -37,18 +37,30 @@ Sitemap: https://galnavi.top/sitemap.xml
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://galnavi.top/</loc>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://galnavi.top/nav/</loc>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://galnavi.top/nav/help/</loc>
-    <priority>0.8</priority>
-  </url>
+<url>
+<loc>https://galnavi.top/</loc>
+<priority>1.0</priority>
+</url>
+<url>
+<loc>https://galnavi.top/nav/</loc>
+<priority>1.0</priority>
+</url>
+<url>
+<loc>https://galnavi.top/nav/detail/</loc>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://galnavi.top/nav/about/</loc>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://galnavi.top/nav/group/</loc>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://galnavi.top/nav/help/</loc>
+<priority>0.8</priority>
+</url>
 </urlset>
 ```
 
@@ -138,4 +150,4 @@ Sitemap: https://galnavi.top/sitemap.xml
 - 路由与收录 → [路由与页面体系](../02-网站架构/路由与页面体系.md)
 - 各页面 → [入口页（永久发布页）](../05-页面详解/入口页（永久发布页）.md) / [主站导航页](../05-页面详解/主站导航页.md) 等
 - 安全响应头（HSTS 待修正）→ [安全响应头](安全响应头.md)
-- 上一级 → [00 知识库地图 (MOC)](../00 知识库地图 (MOC).md)
+- 上一级 → [00 知识库地图 (MOC).md](https://github.com/argb6/galnavi-obsidian/blob/main/00%20%E7%9F%A5%E8%AF%86%E5%BA%93%E5%9C%B0%E5%9B%BE%20(MOC).md)
