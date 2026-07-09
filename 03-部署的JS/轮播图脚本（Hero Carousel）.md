@@ -7,7 +7,8 @@ aliases: [Hero轮播, 轮播图, initHeroCarousel]
 
 # 轮播图脚本（Hero Carousel）
 
-> [!info] 位置
+> ！位置
+> 
 > 主站 `/nav/` 行948 主应用脚本中的 `initHeroCarousel()` 函数。负责顶部 Hero 轮播图的图片加载、slide 生成、自动播放与手动控制。
 
 ## 职责
