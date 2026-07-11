@@ -19,7 +19,12 @@ aliases: [存储层, D1数据库, KV存储, 数据库设计]
 ### 对应端点
 [`/nav/api/nav`](API端点清单.md)
 
-### 表结构
+> ⚠️ **重要**：GalNavi 使用**两个独立的 D1 数据库绑定**：
+> 1. 主站 D1 绑定：存放站点导航数据（`navi_sites` 表），用于 `/nav/`、`/nav/detail/`、`/nav/api/nav`
+> 2. group D1 绑定：存放神魔殿堂数据（`resources` 表），用于 `/nav/group/`
+
+### 表结构（主站 D1 绑定）
+
 D1 中有一张业务表，存放站点数据。字段如下：
 
 | 列 | 类型 | 说明 | 查询处 |
@@ -32,6 +37,28 @@ D1 中有一张业务表，存放站点数据。字段如下：
 | `url` | TEXT | 主站链接 | 主站 |
 | `icon_path` | TEXT | 图标 URL | 主站 |
 | `md_content` | TEXT | **详情页 Markdown 内容** | 详情页 |
+
+### 表结构（group D1 绑定）
+
+`/nav/group/`（神魔殿堂）使用独立的 D1 绑定，表名为 `resources`，用于存放神器、魔器、仙器三类数据。字段如下：
+
+| 列 | 类型 | 说明 | 查询处 |
+|---|---|---|---|
+| `id` | INTEGER | 主键 | `/nav/group/` |
+| `category` | TEXT | 分类（神器/魔器/仙器）| `/nav/group/` |
+| `name` | TEXT | 器物名称 | `/nav/group/` |
+| `official_url` | TEXT | 官网链接 | `/nav/group/` |
+| `details_url` | TEXT | 详情页链接 | `/nav/group/` |
+| `link1` | TEXT | 额外链接 1 | `/nav/group/` |
+| `link2` | TEXT | 额外链接 2 | `/nav/group/` |
+| `link3` | TEXT | 额外链接 3 | `/nav/group/` |
+
+**SQL 查询**：
+```sql
+SELECT * FROM resources ORDER BY category, id
+```
+
+详见 [神魔殿堂](神魔殿堂.md)。
 
 > 注：主站 API 只 SELECT 前 7 个字段，`md_content` 仅详情页查询。这就是为何 [详情页](详情与外链跳转.md) 能展示网盘链接/详情信息等 data.json 中没有的扩展信息。
 
@@ -115,6 +142,11 @@ const stmt = env.<D1绑定>.prepare(
 );
 const row = await stmt.bind(itemKey).first();
 
+// D1 查询（神魔殿堂）：列出所有神器、魔器、仙器（独立 group 绑定）
+const { results } = await env.group.prepare(
+  "SELECT * FROM resources ORDER BY category, id"
+).all();
+
 // KV 读取（轮播图）
 const heroJson = await env.<轮播图KV绑定>.get('<轮播图键名>');
 
@@ -122,6 +154,11 @@ const heroJson = await env.<轮播图KV绑定>.get('<轮播图键名>');
 const raw = await env.<推荐KV绑定>.get('<推荐键名>');
 await env.<推荐KV绑定>.put('<推荐键名>', JSON.stringify(keys));
 ```
+
+> 注：
+> - 神魔殿堂使用独立的 `env.group` D1 绑定，与主站站点数据完全分离
+> - `resources` 表结构详见 [神魔殿堂](神魔殿堂.md)
+> - 安全要点：所有 SQL 均用**参数化绑定**（`.bind(itemKey)`）防注入，KV 仅存配置型数据
 
 > 注：
 > 安全要点：所有 SQL 均用**参数化绑定**（`.bind(itemKey)`）防注入，KV 仅存配置型数据。

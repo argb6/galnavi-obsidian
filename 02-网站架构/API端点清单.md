@@ -19,6 +19,8 @@ aliases: [API清单, 接口列表, 端点]
 | `/nav/api/hero` | GET | **KV** | 轮播图图片列表 | ~463 B |
 | `/nav/api/featured` | GET | **KV** | 站长推荐 item_keys | ~41 B |
 
+> ⚠️ **注意**：`/nav/group/`（神魔殿堂）页面直接查询 D1，不提供独立 API 端点。数据由 `group.js` Worker 从独立的 D1 绑定（`group` → `resources` 表）查询。详见 [神魔殿堂](神魔殿堂.md)。
+
 ## 1. `/nav/api/nav` —— D1 站点数据
 
 **存储**：Cloudflare D1（SQLite）
@@ -120,6 +122,52 @@ const CAT_MAP = {
 - **CORS**：支持 OPTIONS 预检（`GET, POST, OPTIONS`），`Access-Control-Allow-Origin: https://galnavi.top`
 
 详见 [主应用逻辑脚本（卡片与交互）](主应用逻辑脚本（卡片与交互）.md) 的 featured 部分。
+
+## 神魔殿堂 D1 查询（非 API 端点）
+
+> ⚠️ 神魔殿堂页面不提供独立的 JSON API 端点，数据由 `group.js` Worker 在服务端直接查询 D1 并 SSR 渲染为 HTML。
+
+### D1 查询（group.js）
+
+**存储**：Cloudflare D1（独立 `group` 绑定）
+**用途**：返回神器、魔器、仙器三类特殊资源，供神魔殿堂页面渲染
+
+### 查询方式
+
+```javascript
+const { results } = await env.group.prepare(
+  "SELECT * FROM resources ORDER BY category, id"
+).all();
+```
+
+### resources 表结构
+
+| 字段 | 类型 | 说明 | 必填 |
+|---|---|---|---|
+| `id` | INTEGER | 主键 | ✅ |
+| `category` | TEXT | 分类（神器/魔器/仙器）| ✅ |
+| `name` | TEXT | 器物名称 | ✅ |
+| `official_url` | TEXT | 官网链接 | ❌ |
+| `details_url` | TEXT | 详情页链接 | ❌ |
+| `link1` | TEXT | 额外链接 1 | ❌ |
+| `link2` | TEXT | 额外链接 2 | ❌ |
+| `link3` | TEXT | 额外链接 3 | ❌ |
+
+### 特点
+
+- **独立 D1 绑定**：`env.group`，与主站站点数据（`navi_sites` 表）完全分离
+- **纯查询操作**：无写操作，仅 `SELECT * FROM resources ORDER BY category, id`
+- **SSR 渲染**：数据由 Worker 服务端渲染为 HTML，而非返回 JSON
+- **容错处理**：数据库查询失败时返回空数组 `data = []`
+- **缓存策略**：`Cache-Control: public, max-age=3600`（1 小时）
+
+### 源码实现细节（group.js）
+
+- **绑定名**：`group`
+- **表名**：`resources`
+- **排序**：先按 `category` 升序，再按 `id` 升序
+- **HTML 转义**：所有数据库值通过 `escHtml()` 函数转义，防止 XSS
+- **Worker**：`group.js`（788 行），详见 [神魔殿堂](神魔殿堂.md)
 
 ## 非真实端点（fallback）
 
