@@ -1,8 +1,14 @@
 ---
-tags: [GalNavi, 数据, data.json, D1]
+tags:
+  - GalNavi
+  - 数据
+  - D1
 created: 2026-07-08
 updated: 2026-07-08
-aliases: [data.json, 数据结构, 站点数据]
+aliases:
+  - data.json
+  - 数据结构
+  - 站点数据
 ---
 
 # data.json 数据结构
