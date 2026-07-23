@@ -19,7 +19,7 @@ aliases: [API清单, 接口列表, 端点]
 | `/nav/api/hero` | GET | KV | 轮播图 |
 | `/nav/api/featured` | GET / POST / OPTIONS | KV | 站长推荐 |
 
-> `/nav/group/`（[[圣器殿堂]]）不提供 JSON API：服务端直接查殿堂 D1 后 SSR。
+> `/nav/group/`（「圣器殿堂」）不提供 JSON API：服务端直接查殿堂 D1 后 SSR。
 
 ## 1. `/nav/api/nav` —— 站点数据
 
@@ -53,13 +53,13 @@ const CAT_MAP = {
 
 相对路径图标会补全为 GitHub raw 基址。CORS 限定同源。
 
-详见 [[数据预加载脚本（D1载入）]]、[[data.json数据结构]]。
+详见 「数据预加载脚本（D1载入）」、「data.json数据结构」。
 
 ## 2. `/nav/api/hero` —— 轮播图
 
 返回 `{ images: string[], debug: string }`（客户端亦兼容纯数组）。Worker 对 KV 原始值做多重容错解析（JSON → 逗号分割 → 单元素）。图片多托管于 GitHub raw。客户端空数组兜底。
 
-详见 [[轮播图脚本（HeroCarousel）]]。
+详见 「轮播图脚本（HeroCarousel）」。
 
 ## 3. `/nav/api/featured` —— 站长推荐
 
@@ -73,11 +73,11 @@ const CAT_MAP = {
 - KV 为空：本地标签匹配 fallback 展示
 - 写入接口仅供运维侧使用，浏览器端只读
 
-详见 [[主应用逻辑脚本（卡片与交互）]]、[[存储层D1与KV]]。
+详见 「主应用逻辑脚本（卡片与交互）」、[[存储层D1与KV]]。
 
 ## 圣器殿堂（非 API）
 
-殿堂页服务端查询 `resources` 表并 SSR。失败时返回错误态。详见 [[圣器殿堂]]。
+殿堂页服务端查询 `resources` 表并 SSR。失败时返回错误态。详见 「圣器殿堂」。
 
 ## 非真实端点（fallback）
 
@@ -87,9 +87,5 @@ const CAT_MAP = {
 探测时看 `Content-Type`：真实 API 为 `application/json`。
 
 ## 相关笔记
-
-- [[存储层D1与KV]]
-- [[数据预加载脚本（D1载入）]]
-- [[data.json数据结构]]
-- [[圣器殿堂]]
-- [[00知识库地图(MOC)]]
+- 上一级 → [[网站架构]]
+- 相关 → [[存储层D1与KV]]

@@ -15,7 +15,7 @@ aliases:
 
 > ！概述
 > 
-> `docs/data.json` 是 GitHub 仓库中的数据文件，是线上 D1 数据库（[/nav/api/nav](../02-网站架构/API端点清单.md)）的**滞后镜像**。
+> `docs/data.json` 是 GitHub 仓库中的数据文件，是线上 D1 数据库（「/nav/api/nav」）的**滞后镜像**。
 > - 线上 D1（权威）：截至 2026-07-08 共 **29 条**（simulators 7 + websites 22）
 > - 仓库 data.json（镜像）
 ## 文件位置
@@ -61,7 +61,7 @@ aliases:
 ### item_key
 - 唯一主键
 - 可用英文（`joiplay`、`kirikiroid2`）或中文（`盖世游戏`、`灵梦御所`）
-- 被 [/nav/api/featured](../02-网站架构/API端点清单.md) 的 `item_keys` 引用
+- 被 「/nav/api/featured」 的 `item_keys` 引用
 - 用于详情页 URL：`/nav/detail/?item_key=xxx`
 
 ### category（5 类，复数）
@@ -73,9 +73,9 @@ aliases:
 | `company` | 会社 | `company` |
 | `hanhua` | 汉化组 | `hanhua` |
 
-> 当前只有 `simulators` 和 `websites` 有数据，`tools`/`company`/`hanhua` 是规划中的分类（导航栏已预留视图，见 [路由与页面体系](../02-网站架构/路由与页面体系.md)）。
+> 当前只有 `simulators` 和 `websites` 有数据，`tools`/`company`/`hanhua` 是规划中的分类（导航栏已预留视图，见 「路由与页面体系」）。
 
-映射关系见 [数据预加载脚本（D1 载入）](../03-部署的JS/数据预加载脚本（D1载入）.md) 的 `CAT_MAP`。
+映射关系见 「数据预加载脚本（D1 载入）」 的 `CAT_MAP`。
 
 ### tags（逗号分隔字符串）
 - 存储为字符串：`"安卓,rpg,多功能,插件化"`
@@ -92,7 +92,7 @@ aliases:
 - 多为各站 favicon 或图标 URL
 - 部分用 Bing 的 ODF 缩略图服务（`bing.com/th/id/ODF...`）
 - 部分用站点自身图标
-- 图标加载失败时显示默认 🔗（见 [主应用逻辑脚本（卡片与交互）](../03-部署的JS/主应用逻辑脚本（卡片与交互）.md) 的 buildCard）
+- 图标加载失败时显示默认 🔗（见 「主应用逻辑脚本（卡片与交互）」 的 buildCard）
 
 ## 数据来源与维护
 
@@ -104,7 +104,5 @@ aliases:
 
 ## 相关笔记
 
-- 标签语义 → [标签体系](标签体系.md)
-- 数据加载 JS → [数据预加载脚本（D1 载入）](../03-部署的JS/数据预加载脚本（D1载入）.md)
-- 存储 → [存储层 D1 与 KV](../02-网站架构/存储层D1与KV.md)
-- 上一级 → [00 知识库地图 (MOC)](../00知识库地图(MOC).md)
+- 上一级 → [[数据与资源]]
+- 相关 → [[标签体系]]

@@ -47,13 +47,13 @@ aliases: [仓库角色, GitHub仓库, argb6/gal-navigation]
 - 仓库让数据**可追溯、可 diff、可社区贡献**，但**非实时权威源**
 
 ### 角色 2：静态资源 CDN
-- `docs/hero/hero*.png` 被线上 KV 引用（[轮播图脚本（Hero Carousel）](../03-部署的JS/轮播图脚本（HeroCarousel）.md)）
+- `docs/hero/hero*.png` 被线上 KV 引用（「轮播图脚本（Hero Carousel）」）
 - 通过 `raw.githubusercontent.com` 访问，免费 CDN
 - 详见 [图片素材资源](图片素材资源.md)
 
 ### 角色 3：项目门面与社区入口
 - `README.md` 是项目的公开说明书
-- Issues 是提交新站点/反馈的渠道（[开源与社区](../01-项目总览/开源与社区.md)）
+- Issues 是提交新站点/反馈的渠道（「开源与社区」）
 - README 的 badges（license、discord、stars、issues）展示项目状态
 
 ## 仓库与线上的对应关系
@@ -93,8 +93,5 @@ graph LR
 
 ## 相关笔记
 
-- 数据 → [data.json 数据结构](data.json数据结构.md)
-- 素材 → [图片素材资源](图片素材资源.md)
-- 架构 → [整体技术架构](../02-网站架构/整体技术架构.md)
-- 开源 → [开源与社区](../01-项目总览/开源与社区.md)
-- 上一级 → [00 知识库地图 (MOC)](../00知识库地图(MOC).md)
+- 上一级 → [[数据与资源]]
+- 相关 → [[图片素材资源]]

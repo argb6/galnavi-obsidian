@@ -46,7 +46,7 @@ aliases: [存储层, D1数据库, KV存储, 数据库设计]
 SELECT * FROM resources ORDER BY category, id
 ```
 
-详见 [[圣器殿堂]]。
+详见 「圣器殿堂」。
 
 ### 为何用 D1
 - 需按分类过滤，结构固定
@@ -83,9 +83,5 @@ SELECT * FROM resources ORDER BY category, id
 SQL 使用参数化查询，避免注入。
 
 ## 相关笔记
-
-- [[API端点清单]]
-- [[data.json数据结构]]
-- [[圣器殿堂]]
-- [[整体技术架构]]
-- [[00知识库地图(MOC)]]
+- 上一级 → [[网站架构]]
+- 相关 → [[API端点清单]]
