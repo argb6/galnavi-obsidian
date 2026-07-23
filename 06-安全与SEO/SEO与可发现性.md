@@ -9,7 +9,7 @@ aliases: [SEO, 搜索引擎优化, sitemap, robots, OG标签]
 
 > ！概述
 > 
-> GalNavi 在 SEO 上做了系统化配置：sitemap、robots、meta 标签、Open Graph、canonical。让搜索引擎与社交平台能正确理解与展示站点。**入口页（galnavi.js）SEO 配置最完整**，主站（websearch.js）次之。
+> GalNavi 在 SEO 上做了系统化配置：sitemap、robots、meta 标签、Open Graph、canonical。让搜索引擎与社交平台能正确理解与展示站点。**入口页 SEO 配置最完整**，主站次之。
 
 ## SEO 资产清单
 
@@ -66,16 +66,15 @@ Sitemap: https://galnavi.top/sitemap.xml
 ```
 
 收录策略：
-- 入口页 `/` 与主站 `/nav/`：priority 1.0（最重要）
-- 帮助页 `/nav/help/`：priority 0.8
-- **未收录**：
-  - `/about`（关于页，内容固定但未提交 sitemap）
-  - `/nav/detail/?item_key=xxx`（详情页，数量多且变动频繁）
-  - API 端点（无需收录）
+- `/` 与 `/nav/`：priority 1.0
+- `/nav/detail/`、`/nav/about/`、`/nav/group/`、`/nav/help/`：priority 0.8
+- **不逐条收录**：`/nav/detail/?item_key=xxx`、API 端点
+
+> 关于页 `/nav/about/` 已正式上线并写入 sitemap（不再是维护占位页）。
 
 ## 各页 meta 标签
 
-### 入口页 `/`（galnavi.js，SEO 最完整）
+### 入口页 `/`（SEO 最完整）
 ```html
 <title>GALNAVI 永久发布页 - 最新版本与更新日志</title>
 <meta name="description" content="GALNAVI 官方永久发布页，提供最新版本下载、更新日志与项目动态。纯净无广，一站直达。">
@@ -85,7 +84,7 @@ Sitemap: https://galnavi.top/sitemap.xml
 ```
 > 入口页标题已从早期的"ACG 二次元资源聚合导航"改为"永久发布页 - 最新版本与更新日志"，聚焦发布页定位。
 
-### 主站 `/nav/`（websearch.js）
+### 主站 `/nav/`
 ```html
 <title>GALNAVI</title>
 <meta name="color-scheme" content="dark">

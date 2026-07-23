@@ -11,7 +11,7 @@ aliases: [CSP, Content-Security-Policy, 内容安全策略]
 > 
 > **仅主站** `/nav/`的 `<meta http-equiv="Content-Security-Policy">`。其他 worker **未设置 CSP**。
 
-## 完整 CSP 策略（源码确认，websearch.js 行46）
+## 完整 CSP 策略（主站）
 
 ```http
 Content-Security-Policy:
@@ -43,7 +43,10 @@ Content-Security-Policy:
 
 ### `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com`
 - 允许内联样式（CSS 全内联，必需）
-- 允许 Google Fonts 样式（预留，当前 CSS 全内联未实际引用）
+- 允许 Google Fonts 样式表：主站 CSP **放行**该域，但主站 HTML **并不** `<link>` 字体；实际加载 Noto Sans SC / Outfit 的是**圣器殿堂、详情页**（二者无此 CSP meta）。入口 / 关于 / 帮助以系统中文字体为主
+
+### `font-src 'self' data: https://fonts.gstatic.com`
+- 主站 CSP 预留的 Google Fonts 字体文件域；当前主站未引用，主要对应殿堂 / 详情页的字体实践
 
 ### `img-src 'self' data: https:`
 - 同源图片、`data:` 内联 base64（favicon）、**任何 https 图片源**
@@ -55,20 +58,18 @@ Content-Security-Policy:
 - **不能** fetch 第三方域（防止数据外泄到外部服务器）
 - 这也解释了为何所有 API 都在 `/nav/api/` 下
 
-### `font-src 'self' data: https://fonts.gstatic.com`
-- 字体只允许同源、base64、Google Fonts 字体域
-
 ## CSP 仅作用于主站
 
-| Worker | CSP | 说明 |
+| 页面 | CSP | 说明 |
 |---|---|---|
 | `/nav/`（主站）| ✅ 有 | 完整 CSP meta |
-| `/nav/detail/`（详情页）| ❌ 无 | 未设 CSP meta |
+| `/nav/detail/`（详情页）| ❌ 无 | 未设 CSP；会拉 Google Fonts |
+| `/nav/group/`（圣器殿堂）| ❌ 无 | 未设 CSP；会拉 Google Fonts |
 | `/nav/about/`（关于页）| ❌ 无 | 未设 CSP meta |
 | `/nav/help/`（帮助页）| ❌ 无 | 未设 CSP meta |
 | `galnavi.top`（入口页）| ❌ 无 | 未设 CSP meta |
 
-> 注：detail/about/help 页内容相对固定（SSR 直出），外链已用 `rel="noopener noreferrer"` 保护，无客户端 fetch 第三方数据，故未设 CSP 风险较低。但理想情况下所有页面都应设 CSP。
+> 注：多数子页为 SSR 直出，外链已用 `rel="noopener noreferrer"`；理想情况下各页都应设 CSP。
 
 ## CSP 防护效果
 

@@ -1,171 +1,91 @@
 ---
 tags: [GalNavi, 架构, D1, KV, Cloudflare, 存储]
 created: 2026-07-08
-updated: 2026-07-09
+updated: 2026-07-24
 aliases: [存储层, D1数据库, KV存储, 数据库设计]
 ---
 
 # 存储层 D1 与 KV
 
-> ！分工原则
-> 
-> GalNavi 用 **D1** 存"结构化、需查询的核心业务数据"（站点列表），用 **KV** 存"低频变更、整存整取的配置型数据"（轮播图、推荐）。这是 Cloudflare 生态里典型的"关系数据 vs 配置数据"分工。
+> [!info] 分工原则
+>
+> **D1** 存结构化、需查询的核心业务数据；**KV** 存低频变更、整存整取的配置数据。
 
-## D1（Cloudflare SQLite 数据库）
+## D1
 
-### 定位
-存放站点核心数据，是卡片渲染的数据源。
+### 主站库（站点导航）
 
-### 对应端点
-[`/nav/api/nav`](API端点清单.md)
+用于 `/nav/`、`/nav/detail/`、`/nav/api/nav`。
 
-> ⚠️ **重要**：GalNavi 使用**两个独立的 D1 数据库绑定**：
-> 1. 主站 D1 绑定：存放站点导航数据（`navi_sites` 表），用于 `/nav/`、`/nav/detail/`、`/nav/api/nav`
-> 2. group D1 绑定：存放神魔殿堂数据（`resources` 表），用于 `/nav/group/`
+| 列 | 说明 | 查询处 |
+|---|---|---|
+| `item_key` | 唯一键 | 主站 + 详情 |
+| `title` | 标题 | 主站 + 详情 |
+| `category` | 分类 | 主站 |
+| `tags` | 标签 | 主站 + 详情 |
+| `short_desc` | 简介 | 主站 + 详情 |
+| `url` | 主站链接 | 主站 |
+| `icon_path` | 图标 URL | 主站 |
+| `md_content` | 详情 Markdown | 仅详情页 |
 
-### 表结构（主站 D1 绑定）
+主站 API 只取前 7 列；`md_content` 仅详情页查询。
 
-D1 中有一张业务表，存放站点数据。字段如下：
+### 殿堂库（圣器殿堂）
 
-| 列 | 类型 | 说明 | 查询处 |
-|---|---|---|---|
-| `item_key` | TEXT PRIMARY KEY | 唯一键 | 主站 + 详情 |
-| `title` | TEXT | 标题 | 主站 + 详情 |
-| `category` | TEXT | 站点分类 | 主站 |
-| `tags` | TEXT | 标签 | 主站 + 详情 |
-| `short_desc` | TEXT | 简介 | 主站 + 详情 |
-| `url` | TEXT | 主站链接 | 主站 |
-| `icon_path` | TEXT | 图标 URL | 主站 |
-| `md_content` | TEXT | **详情页 Markdown 内容** | 详情页 |
+用于 `/nav/group/`，表 `resources`，与主站库分离：
 
-### 表结构（group D1 绑定）
+| 列 | 说明 |
+|---|---|
+| `id` | 主键 |
+| `category` | 神器 / 魔器 / 仙器 |
+| `name` | 名称 |
+| `official_url` / `details_url` | 官网 / 详情 |
+| `link1` ~ `link3` | 额外链接 |
 
-`/nav/group/`（神魔殿堂）使用独立的 D1 绑定，表名为 `resources`，用于存放神器、魔器、仙器三类数据。字段如下：
-
-| 列 | 类型 | 说明 | 查询处 |
-|---|---|---|---|
-| `id` | INTEGER | 主键 | `/nav/group/` |
-| `category` | TEXT | 分类（神器/魔器/仙器）| `/nav/group/` |
-| `name` | TEXT | 器物名称 | `/nav/group/` |
-| `official_url` | TEXT | 官网链接 | `/nav/group/` |
-| `details_url` | TEXT | 详情页链接 | `/nav/group/` |
-| `link1` | TEXT | 额外链接 1 | `/nav/group/` |
-| `link2` | TEXT | 额外链接 2 | `/nav/group/` |
-| `link3` | TEXT | 额外链接 3 | `/nav/group/` |
-
-**SQL 查询**：
 ```sql
 SELECT * FROM resources ORDER BY category, id
 ```
 
-详见 [神魔殿堂](神魔殿堂.md)。
+详见 [[圣器殿堂]]。
 
-> 注：主站 API 只 SELECT 前 7 个字段，`md_content` 仅详情页查询。这就是为何 [详情页](详情与外链跳转.md) 能展示网盘链接/详情信息等 data.json 中没有的扩展信息。
+### 为何用 D1
+- 需按分类过滤，结构固定
+- 可用 SQL 维护
 
-### 为什么用 D1 而非 KV
-- 需要**按 category 过滤**、未来可能按标签查询 → 关系型查询
-- 数据有结构（固定字段）→ 表结构合适
-- 可用 SQL 维护（增删改查）
+## KV
 
-## KV（Cloudflare Workers KV）
+### 用途
 
-### 定位
-存放配置型、低频变更、整存整取的数据。
+| 用途 | 对应端点 | 说明 |
+|---|---|---|
+| 轮播图 | `/nav/api/hero` | 图片 URL 列表；解析容错（JSON / 逗号分割）|
+| 站长推荐 | `/nav/api/featured` | 推荐站点的 item_key 列表；GET 公开读 |
 
-### 两个独立 KV 绑定
+### 为何用 KV
+- 整存整取，无需复杂查询
+- 读多写少，适合边缘缓存
+- 轮播与推荐分属不同配置空间，互不影响
 
-GalNavi 使用**两个独立的 KV namespace 绑定**，而非单一 KV：
+### 推荐展示策略
+1. 客户端 GET 推荐列表
+2. 有数据则按序展示
+3. 为空则本地标签匹配 fallback（仅前端展示，不写回）
 
-#### KV 绑定 1（轮播图）
-- **对应端点**：`/nav/api/hero`
-- **存储内容**：图片 URL（JSON 数组字符串或逗号分隔字符串，Worker 兼容解析）
-- **值示例**：`["https://raw.githubusercontent.com/.../hero1.png",...]` 或逗号分隔串
-- **特点**：3 张图，变更频率极低（换通知时才改）
-- **容错**：源码对 KV 值做多重解析——先 `JSON.parse`，失败则按逗号分割，再失败当作单元素数组
-
-#### KV 绑定 2（站长推荐）
-- **对应端点**：`/nav/api/featured`
-- **存储内容**：推荐站点的 item_key 数组（JSON 字符串）
-- **值示例**：`["灵梦御所","touchgal"]`
-- **特点**：站长手动调整推荐时才变；支持 GET 读取 + POST 写入
-
-### 为什么用 KV 而非 D1
-- 整存整取，**无需查询/过滤**
-- 读取频繁但变更极少 → KV 全球边缘缓存收益大
-- 结构简单（一个 JSON 字符串即可）
-- 拆成两个独立 namespace：隔离不同配置的读写权限与缓存策略
-
-### KV 的自愈机制
-featured 有有趣的"客户端回写"逻辑：
-1. 客户端先 GET `/nav/api/featured`
-2. 若 KV 为空 → 用标签匹配算法本地计算推荐
-3. 计算后 **POST 回 `/nav/api/featured`**（Worker 写入对应 KV 绑定）写入 KV
-4. 后续请求即可直接命中 KV
-
-> 这是一种"惰性初始化 + 边缘缓存预热"模式，避免站长手动配置也能生效，配好后又被 KV 接管。
-
-## D1 vs KV 对比
+## D1 vs KV
 
 | 维度 | D1 | KV |
 |---|---|---|
 | 模型 | 关系型（SQLite）| 键值对 |
-| 查询 | SQL，支持过滤/排序 | 按 key 整取 |
-| 一致性 | 强一致 | 最终一致（边缘缓存）|
-| 适合 | 结构化业务数据 | 配置/缓存 |
-| GalNavi 用途 | 站点列表（业务表）| 轮播图、推荐（两个 KV namespace）|
-| 读取延迟 | 略高（需查询）| 极低（边缘缓存）|
+| 查询 | SQL 过滤/排序 | 按 key 整取 |
+| 一致性 | 强一致 | 最终一致 |
+| GalNavi | 站点列表、殿堂器物 | 轮播、推荐 |
 
-## 绑定方式
-
-Cloudflare Workers 中通过 `wrangler.toml` 绑定 D1 与 KV namespace，示例如下：
-```toml
-[​[d1_databases]]
-binding = "<D1绑定名>"
-database_name = "<数据库名>"
-
-[​[kv_namespaces]]
-binding = "<轮播图KV绑定名>"
-id = "<namespace ID>"
-key = "<key name>"
-```
-
-Worker 代码中的调用示意：
-```javascript
-// D1 查询（主站）：列出所有站点
-const { results } = await env.<D1绑定>.prepare(
-  "SELECT item_key, title, category, tags, short_desc, url, icon_path FROM <表名> ORDER BY category ASC"
-).all();
-
-// D1 查询（详情页，参数化绑定防注入）
-const stmt = env.<D1绑定>.prepare(
-  "SELECT title, short_desc, tags, md_content FROM <表名> WHERE item_key = ?"
-);
-const row = await stmt.bind(itemKey).first();
-
-// D1 查询（神魔殿堂）：列出所有神器、魔器、仙器（独立 group 绑定）
-const { results } = await env.group.prepare(
-  "SELECT * FROM resources ORDER BY category, id"
-).all();
-
-// KV 读取（轮播图）
-const heroJson = await env.<轮播图KV绑定>.get('<轮播图键名>');
-
-// KV 读写（推荐）
-const raw = await env.<推荐KV绑定>.get('<推荐键名>');
-await env.<推荐KV绑定>.put('<推荐键名>', JSON.stringify(keys));
-```
-
-> 注：
-> - 神魔殿堂使用独立的 `env.group` D1 绑定，与主站站点数据完全分离
-> - `resources` 表结构详见 [神魔殿堂](神魔殿堂.md)
-> - 安全要点：所有 SQL 均用**参数化绑定**（`.bind(itemKey)`）防注入，KV 仅存配置型数据
-
-> 注：
-> 安全要点：所有 SQL 均用**参数化绑定**（`.bind(itemKey)`）防注入，KV 仅存配置型数据。
+SQL 使用参数化查询，避免注入。
 
 ## 相关笔记
 
-- API 端点 → [API 端点清单](API端点清单.md)
-- 数据结构 → [data.json 数据结构](data.json数据结构.md)
-- 整体架构 → [整体技术架构](整体技术架构.md)
-- 上一级 → [00 知识库地图 (MOC)](00知识库地图(MOC).md)
+- [[API端点清单]]
+- [[data.json数据结构]]
+- [[圣器殿堂]]
+- [[整体技术架构]]
+- [[00知识库地图(MOC)]]

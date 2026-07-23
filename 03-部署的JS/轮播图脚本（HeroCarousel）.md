@@ -9,7 +9,7 @@ aliases: [Hero轮播, 轮播图, initHeroCarousel]
 
 > ！位置
 > 
-> 主站 `/nav/` 行948 主应用脚本中的 `initHeroCarousel()` 函数。负责顶部 Hero 轮播图的图片加载、slide 生成、自动播放与手动控制。
+> 主站 `/nav/` 主应用中的 `initHeroCarousel()`：轮播图加载、slide 生成、自动播放与手动控制。
 
 ## 职责
 
@@ -100,7 +100,7 @@ const resp = await fetch('/nav/api/hero', { cache: 'no-cache', signal: ctrl2.sig
   - 对象 `{images: [...], debug: "..."}`（debug 模式）
 - `Array.isArray(data) ? data : (data.images || [])` 兼容处理
 
-> 当前线上返回的是 debug 格式（含 debug 字段，KV 中存的是字符串而非 JSON 数组，Worker 解析出错后回退），详见 [API 端点清单](API端点清单.md)。
+> Worker 现版固定返回对象 `{ images, debug }`（非纯数组）；客户端用上面的兼容写法取值。`debug` 为服务端解析诊断字段，业务展示只依赖 `images`。详见 [[API端点清单]]。
 
 ### 2. Fallback 兜底
 ```javascript

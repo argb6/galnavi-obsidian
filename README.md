@@ -8,9 +8,9 @@
 
 ## ✨ 特性
 
-- 🗂️ **6 大维度、33 篇笔记**，覆盖项目全貌
-- 🔗 笔记间双向链接互相关联，可自由跳转
-- 📊 全部基于线上实测（HTML / JS / API 实际抓取分析），非臆测
+- 🗂️ **6 大维度、多篇笔记**，覆盖项目全貌
+- 🔗 笔记间双向链接互相关联
+- 📊 基于线上实测（HTML / API / 响应头）
 - 🏷️ 每篇笔记含 YAML front matter（tags、created、aliases）
 
 ## 📂 目录结构
@@ -22,7 +22,8 @@ galnavigation/
 │   ├── GalNavi 项目简介
 │   ├── 为什么开发 GalNavi（目的与动机）
 │   ├── GalNavi 的作用与价值
-│   └── 开源与社区
+│   ├── 开源与社区
+│   └── 纳普吉祥物
 ├── 02-网站架构/                      ← 架构、路由、API、存储
 │   ├── 整体技术架构
 │   ├── 路由与页面体系
@@ -46,6 +47,7 @@ galnavigation/
 ├── 05-页面详解/                      ← 各页面详细分析
 │   ├── 入口页（永久发布页）
 │   ├── 主站导航页
+│   ├── 圣器殿堂
 │   ├── 帮助页
 │   ├── 关于页
 │   └── 详情与外链跳转
@@ -88,8 +90,8 @@ git clone https://github.com/argb6/galnavi-obsidian.git
 
 | 来源                                                              | 用途                       |
 | --------------------------------------------------------------- | ------------------------ |
-| [galnavi.top](https://galnavi.top) 实际抓取                         | HTML 结构、内联 JS、API 端点、响应头 |
-| [argb6/gal-navigation](https://github.com/argb6/gal-navigation) | README、data.json、图片素材    |
+| [galnavi.top](https://galnavi.top) 实际抓取 | HTML / 内联脚本 / API / 响应头 |
+| [argb6/gal-navigation](https://github.com/argb6/gal-navigation) | README、data.json、图片素材 |
 
 ## ⚖️ 许可
 
