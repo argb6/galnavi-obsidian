@@ -165,5 +165,7 @@ https://raw.githubusercontent.com/argb6/gal-navigation/main/docs/hero/hero3.png
 - 左右有 prev/next 按钮
 
 ## 相关笔记
+
 - 上一级 → [[部署的JS]]
-- 相关 → [[主应用逻辑脚本（卡片与交互）]]
+- [[API端点清单]]
+- [[主应用逻辑脚本（卡片与交互）]]

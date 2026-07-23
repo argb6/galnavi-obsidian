@@ -95,4 +95,5 @@ Access-Control-Allow-Origin: https://galnavi.top
 ## 相关笔记
 
 - 上一级 → [[安全与SEO]]
-- 相关 → [[安全响应头]]
+- [[XSS防护与escapeHtml]]
+- [[安全响应头]]

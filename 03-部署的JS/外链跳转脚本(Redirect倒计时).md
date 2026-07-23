@@ -94,7 +94,7 @@ function startRedirect(targetUrl) {
 
 ## 详情页
 
-详情页对 `.link-entry` 绑定点击 → 同样 3 秒 overlay → `window.open(..., 'noopener,noreferrer')`。**不是**直接裸跳。
+详情页对 `.link-entry` 绑定点击 → 同样 3 秒 overlay → `window.open(..., 'noopener,noreferrer')`。**不是**直接裸跳。页面侧说明见 [[详情与外链跳转]]。
 
 ## 安全要点
 
@@ -107,4 +107,5 @@ function startRedirect(targetUrl) {
 ## 相关笔记
 
 - 上一级 → [[部署的JS]]
-- 详情页 → [[详情与外链跳转]]
+- [[详情与外链跳转]]
+- [[外链安全设计]]

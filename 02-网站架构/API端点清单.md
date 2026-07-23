@@ -87,5 +87,7 @@ const CAT_MAP = {
 探测时看 `Content-Type`：真实 API 为 `application/json`。
 
 ## 相关笔记
+
 - 上一级 → [[网站架构]]
-- 相关 → [[存储层D1与KV]]
+- [[存储层D1与KV]]
+- [[数据预加载脚本（D1载入）]]
