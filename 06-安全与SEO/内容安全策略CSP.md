@@ -39,7 +39,7 @@ Content-Security-Policy:
 | `https://lf26-cdn-tos.bytecdntp.com` | 字节跳动 CDN | ⚠️ 预留/历史，当前未加载 |
 | `https://static.cloudflareinsights.com` | Cloudflare Web Analytics | ✅ 分析用 |
 
-> `'unsafe-inline'` 是因全内联策略必须开的口子。GalNavi 用 [escapeHtml](../03-部署的JS/XSS 防护与 escapeHtml.md) 在渲染层弥补。
+> `'unsafe-inline'` 是因全内联策略必须开的口子。GalNavi 用 [escapeHtml](../03-部署的JS/XSS防护与escapeHtml.md) 在渲染层弥补。
 
 ### `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com`
 - 允许内联样式（CSS 全内联，必需）
@@ -94,8 +94,8 @@ Access-Control-Allow-Origin: https://galnavi.top
 
 ## 相关笔记
 
-- XSS 防护 → [XSS 防护与 escapeHtml.md](XSS防护与escapeHtml.md)
+- XSS 防护 → [XSS 防护与 escapeHtml.md](../03-部署的JS/XSS防护与escapeHtml.md)
 - 安全响应头（含 CORS/Cache-Control）→ [安全响应头](安全响应头.md)
 - 外链安全 → [外链安全设计](外链安全设计.md)
-- 内联策略 → [内联 JS 总览与加载策略.md](内联JS总览与加载策略.md)
-- 上一级 → [00 知识库地图 (MOC).md](00知识库地图(MOC).md)
+- 内联策略 → [内联 JS 总览与加载策略.md](../03-部署的JS/内联JS总览与加载策略.md)
+- 上一级 → [00 知识库地图 (MOC).md](../00知识库地图(MOC).md)
